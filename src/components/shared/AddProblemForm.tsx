@@ -1,5 +1,6 @@
 "use client";
-import { useState, FormEvent } from "react";
+import { useState } from "react";
+import Link from "next/link";
 import { Button } from "../ui/button";
 import addProblem from "@/actions/addProblemAction";
 
@@ -15,12 +16,11 @@ export default function AddProblemForm() {
       <h1 className="text-center text-2xl font-bold mb-6">Add a New Problem</h1>
       <form
         action={async (formData) => {
-          console.log("FUCK" + title);
-          addProblem(formData);
+          await addProblem(formData);
           setTitle("");
           setStatement("");
           setConstraints("");
-          setDifficulty("");
+          setDifficulty("EASY");
           setTags("");
         }}
         className="space-y-4 max-w-md mx-auto"
@@ -96,6 +96,11 @@ export default function AddProblemForm() {
           Add Problem
         </Button>
       </form>
+      <div className="mt-6 text-center">
+        <Link href="/admin" className="text-blue-600 hover:text-blue-800">
+          Back to Admin Panel
+        </Link>
+      </div>
     </div>
   );
 }
