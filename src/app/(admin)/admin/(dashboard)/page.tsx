@@ -1,7 +1,9 @@
+import { authorizeAdminRoute } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
-export default function Admin() {
+export default async function Admin() {
+  await authorizeAdminRoute();
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-sm">

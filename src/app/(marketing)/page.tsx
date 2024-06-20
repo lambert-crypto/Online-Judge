@@ -1,6 +1,5 @@
-import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
-import { signIn, signOut } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import Image from "next/image";
 
 export default async function Home() {

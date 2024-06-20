@@ -1,5 +1,6 @@
 "use client";
 
+import deleteProblemAction from "@/actions/deleteProblemAction";
 import { Problem } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
@@ -9,13 +10,6 @@ type ProblemListProps = {
   problems: Problem[];
   isAdmin?: boolean;
 };
-
-async function deleteProblem(id: string) {
-  //TODO: implement a server action with optimistic ui update
-  //   await fetch(`/api/problems/${id}`, {
-  //     method: "DELETE",
-  //   });
-}
 
 export default function ListOfAllProblems({
   problems,
@@ -49,6 +43,26 @@ export default function ListOfAllProblems({
                     <p className="text-gray-600">{problem.constraints}</p>
                   </div>
                   <div className="mb-4">
+                    <h3 className="text-lg font-medium text-gray-700">
+                      Examples
+                    </h3>
+                    <p className="text-gray-600 whitespace-pre-wrap">
+                      {problem.examples}
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <h3 className="text-lg font-medium text-gray-700">
+                      Time Limit
+                    </h3>
+                    <p className="text-gray-600">{problem.timeLimit} ms</p>
+                  </div>
+                  <div className="mb-4">
+                    <h3 className="text-lg font-medium text-gray-700">
+                      Memory Limit
+                    </h3>
+                    <p className="text-gray-600">{problem.memoryLimit} MB</p>
+                  </div>
+                  <div className="mb-4">
                     <h3 className="text-lg font-medium text-gray-700">Tags</h3>
                     <div className="mt-2 flex flex-wrap">
                       {problem.tags.map((tag, index) => (
@@ -67,13 +81,18 @@ export default function ListOfAllProblems({
                   </p>
                 </div>
                 {isAdmin && (
-                  <button
-                    onClick={() => deleteProblem(problem.id)}
-                    className="text-red-600 hover:text-red-800 ml-4"
-                    aria-label="Delete problem"
+                  <form
+                    action={() => {
+                      deleteProblemAction(problem.id);
+                    }}
                   >
-                    <FaTrash size={24} />
-                  </button>
+                    <button
+                      className="text-red-600 hover:text-red-800 ml-4"
+                      aria-label="Delete problem"
+                    >
+                      <FaTrash size={24} />
+                    </button>
+                  </form>
                 )}
               </li>
             ))}

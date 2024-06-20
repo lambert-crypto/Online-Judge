@@ -65,10 +65,21 @@ model Problem {
   title       String
   statement   String
   constraints String
+  examples    String
+  timeLimit   Int
+  memoryLimit Int
+  testcases   Testcase?
   difficulty  Difficulty
   tags        String[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+}
+
+model Testcase {
+  input     String   @unique
+  output    String
+  Problem   Problem? @relation(fields: [problemId], references: [id])
+  problemId String?  @unique
 }
 
 enum Difficulty {

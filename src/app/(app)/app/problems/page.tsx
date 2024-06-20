@@ -62,6 +62,12 @@ export default async function AllProblems() {
           <p className="text-gray-500">No problems found.</p>
         )}
       </div>
+      <Link
+        href="/app/dashboard"
+        className="text-blue-600 hover:text-blue-800 mt-5"
+      >
+        Back to Dashboard
+      </Link>
     </div>
   );
 }

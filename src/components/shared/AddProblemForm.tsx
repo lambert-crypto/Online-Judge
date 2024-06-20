@@ -8,6 +8,9 @@ export default function AddProblemForm() {
   const [title, setTitle] = useState<string>("");
   const [statement, setStatement] = useState<string>("");
   const [constraints, setConstraints] = useState<string>("");
+  const [examples, setExamples] = useState<string>("");
+  const [timeLimit, setTimeLimit] = useState<number>(0);
+  const [memoryLimit, setMemoryLimit] = useState<number>(0);
   const [difficulty, setDifficulty] = useState<string>("EASY");
   const [tags, setTags] = useState<string>("");
 
@@ -20,6 +23,9 @@ export default function AddProblemForm() {
           setTitle("");
           setStatement("");
           setConstraints("");
+          setExamples("");
+          setTimeLimit(0);
+          setMemoryLimit(0);
           setDifficulty("EASY");
           setTags("");
         }}
@@ -58,6 +64,44 @@ export default function AddProblemForm() {
             value={constraints}
             name="constraints"
             onChange={(e) => setConstraints(e.target.value)}
+            required
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Examples:
+          </label>
+          <textarea
+            value={examples}
+            name="examples"
+            onChange={(e) => setExamples(e.target.value)}
+            required
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Time Limit (ms):
+          </label>
+          <input
+            type="number"
+            name="timeLimit"
+            value={timeLimit}
+            onChange={(e) => setTimeLimit(parseInt(e.target.value))}
+            required
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Memory Limit (MB):
+          </label>
+          <input
+            type="number"
+            name="memoryLimit"
+            value={memoryLimit}
+            onChange={(e) => setMemoryLimit(parseInt(e.target.value))}
             required
             className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
