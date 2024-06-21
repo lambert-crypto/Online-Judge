@@ -5,6 +5,16 @@ import { Problem } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
 import { FaTrash } from "react-icons/fa";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from "../ui/dialog";
+import updateProblemDetails from "@/actions/updateProblemDetails"; // Create this action similar to updateUserDetails
+import { useState } from "react";
 
 type ProblemListProps = {
   problems: Problem[];
@@ -27,72 +37,75 @@ export default function ListOfAllProblems({
                 className="border-b border-gray-200 pb-4 flex justify-between items-center"
               >
                 <div>
-                  <h2 className="text-2xl font-semibold mb-2">
-                    {problem.title}
-                  </h2>
-                  <div className="mb-4">
-                    <h3 className="text-lg font-medium text-gray-700">
-                      Statement
-                    </h3>
-                    <p className="text-gray-600">{problem.statement}</p>
-                  </div>
-                  <div className="mb-4">
-                    <h3 className="text-lg font-medium text-gray-700">
-                      Constraints
-                    </h3>
-                    <p className="text-gray-600">{problem.constraints}</p>
-                  </div>
-                  <div className="mb-4">
-                    <h3 className="text-lg font-medium text-gray-700">
-                      Examples
-                    </h3>
-                    <p className="text-gray-600 whitespace-pre-wrap">
-                      {problem.examples}
-                    </p>
-                  </div>
-                  <div className="mb-4">
-                    <h3 className="text-lg font-medium text-gray-700">
-                      Time Limit
-                    </h3>
-                    <p className="text-gray-600">{problem.timeLimit} ms</p>
-                  </div>
-                  <div className="mb-4">
-                    <h3 className="text-lg font-medium text-gray-700">
-                      Memory Limit
-                    </h3>
-                    <p className="text-gray-600">{problem.memoryLimit} MB</p>
-                  </div>
-                  <div className="mb-4">
-                    <h3 className="text-lg font-medium text-gray-700">Tags</h3>
-                    <div className="mt-2 flex flex-wrap">
-                      {problem.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="text-sm bg-blue-100 text-blue-800 rounded-full px-3 py-1 mr-2 mb-2"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  <EditableProblemField
+                    label="Title"
+                    value={problem.title}
+                    field="title"
+                    isEditable={isAdmin}
+                    id={problem.id}
+                  />
+                  <EditableProblemField
+                    label="Statement"
+                    value={problem.statement}
+                    field="statement"
+                    isEditable={isAdmin}
+                    id={problem.id}
+                  />
+                  <EditableProblemField
+                    label="Constraints"
+                    value={problem.constraints}
+                    field="constraints"
+                    isEditable={isAdmin}
+                    id={problem.id}
+                  />
+                  <EditableProblemField
+                    label="Examples"
+                    value={problem.examples}
+                    field="examples"
+                    isEditable={isAdmin}
+                    id={problem.id}
+                  />
+                  <EditableProblemField
+                    label="Time Limit"
+                    value={`${problem.timeLimit} ms`}
+                    field="timeLimit"
+                    isEditable={isAdmin}
+                    id={problem.id}
+                  />
+                  <EditableProblemField
+                    label="Memory Limit"
+                    value={`${problem.memoryLimit} MB`}
+                    field="memoryLimit"
+                    isEditable={isAdmin}
+                    id={problem.id}
+                  />
+                  <EditableProblemField
+                    label="Tags"
+                    value={problem.tags.join(", ")}
+                    field="tags"
+                    isEditable={isAdmin}
+                    id={problem.id}
+                  />
                   <p className="text-sm text-gray-500 mt-1">
                     <span className="font-medium">Difficulty:</span>{" "}
                     {problem.difficulty}
                   </p>
                 </div>
                 {isAdmin && (
-                  <form
-                    action={() => {
-                      deleteProblemAction(problem.id);
-                    }}
-                  >
-                    <button
-                      className="text-red-600 hover:text-red-800 ml-4"
-                      aria-label="Delete problem"
+                  <div className="flex items-center">
+                    <form
+                      action={() => {
+                        deleteProblemAction(problem.id);
+                      }}
                     >
-                      <FaTrash size={24} />
-                    </button>
-                  </form>
+                      <button
+                        className="text-red-600 hover:text-red-800 ml-4"
+                        aria-label="Delete problem"
+                      >
+                        <FaTrash size={24} />
+                      </button>
+                    </form>
+                  </div>
                 )}
               </li>
             ))}
@@ -104,6 +117,66 @@ export default function ListOfAllProblems({
       <Link href="/admin" className="mt-6 text-blue-600 hover:text-blue-800">
         Back to Admin Panel
       </Link>
+    </div>
+  );
+}
+
+type EditableProblemFieldProps = {
+  label: string;
+  value: string;
+  field: string;
+  isEditable: Boolean;
+  id: string;
+};
+
+function EditableProblemField({
+  label,
+  value,
+  field,
+  isEditable,
+  id,
+}: EditableProblemFieldProps) {
+  const [fieldValue, setFieldValue] = useState(value);
+  return (
+    <div className="flex items-center justify-between">
+      <div>
+        <h2 className="text-xl font-semibold">{label}:</h2>
+        <p className="mt-2 p-2 bg-gray-100 rounded">{value}</p>
+      </div>
+      {isEditable && (
+        <Dialog>
+          <DialogTrigger className="ml-4 text-blue-600 hover:text-blue-800">
+            Edit
+          </DialogTrigger>
+          <DialogContent>
+            <DialogTitle>Edit {label}</DialogTitle>
+            <DialogDescription>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  await updateProblemDetails(id, field, fieldValue);
+                }}
+              >
+                <input
+                  type="text"
+                  name={field}
+                  value={fieldValue}
+                  onChange={(e) => {
+                    setFieldValue(e.target.value);
+                  }}
+                  className="mt-2 p-2 border rounded w-full"
+                />
+                <DialogClose
+                  type="submit"
+                  className="mt-4 text-white px-4 py-2 rounded bg-slate-950"
+                >
+                  Save
+                </DialogClose>
+              </form>
+            </DialogDescription>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
