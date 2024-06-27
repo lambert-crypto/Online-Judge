@@ -4,7 +4,7 @@ import { authorizeSignedInUser } from "@/lib/utils";
 export default async function HomePage() {
   const user = await authorizeSignedInUser();
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 py-8">
+    <div className="min-h-screen flex flex-col items-center justify-center py-8">
       <h1 className="text-4xl font-bold mb-6">Welcome {user.name}!</h1>
       <div className="flex flex-col gap-y-4 items-center">
         <Link

@@ -5,9 +5,9 @@ export default async function AllProblems() {
   const problems = await getAllProblems();
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-100 py-8">
+    <div className="min-h-screen flex flex-col items-center py-8 bg-slate-900 text-white ">
       <h1 className="text-3xl font-bold mb-6">All Problems</h1>
-      <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl">
+      <div className="bg-slate-600 shadow-md rounded-lg p-6 w-full max-w-4xl">
         {problems.length > 0 ? (
           <ul className="space-y-4">
             {problems.map((problem, index) => (
@@ -17,7 +17,7 @@ export default async function AllProblems() {
               >
                 <div className="flex flex-col">
                   <div className="flex items-center">
-                    <div className="mr-4 text-gray-600">{index + 1}.</div>
+                    <div className="mr-4 text-white">{index + 1}.</div>
                     <Link
                       href={`/app/problems/${problem.id}`}
                       className="text-xl font-semibold text-blue-600 hover:text-blue-800"
@@ -59,7 +59,7 @@ export default async function AllProblems() {
             ))}
           </ul>
         ) : (
-          <p className="text-gray-500">No problems found.</p>
+          <p className="text-white">No problems found.</p>
         )}
       </div>
       <Link

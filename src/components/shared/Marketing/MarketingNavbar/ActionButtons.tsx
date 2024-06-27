@@ -1,4 +1,6 @@
+import { signIn, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import {
   Sheet,
   SheetContent,
@@ -6,10 +8,13 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import getSession from "@/lib/getSession";
 import Link from "next/link";
 import React from "react";
 import { LuAlignJustify } from "react-icons/lu";
-export default function ActionButtons() {
+export default async function ActionButtons() {
+  const session = await getSession();
+  const user = session?.user;
   return (
     <>
       <div className="md:hidden">
@@ -32,10 +37,41 @@ export default function ActionButtons() {
         </Sheet>
       </div>
       <div className="hidden md:flex md:space-x-4">
-        <Button className="text-md" variant="ghost">
+        {/* <Button className="text-md" variant="ghost">
           Sign In
-        </Button>
+        </Button> */}
+        {user && (
+          <form
+            action={async () => {
+              "use server";
+              await signOut();
+            }}
+          >
+            <Button>Sign Out</Button>
+          </form>
+        )}
+        {!user && (
+          <>
+            <form
+              action={async () => {
+                "use server";
+                await signIn();
+              }}
+            >
+              <Button>Sign In</Button>
+            </form>
+          </>
+        )}
         <Button className="text-md bg-blue-500">Get Started</Button>
+        {user && user.image && (
+          <Image
+            src={user.image}
+            width={35}
+            height={35}
+            alt="Picture of the author"
+            className="rounded-full aspect-square object-cover"
+          />
+        )}
       </div>
     </>
   );

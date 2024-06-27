@@ -26,7 +26,7 @@ export default function UserDetails({
       authenticatedUser.role === "admin")) as Boolean;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+    <div className="max-w-4xl mx-auto p-6 bg-slate-900 text-white rounded-lg shadow-md">
       <h1 className="text-center text-3xl font-bold mb-6">User Profile</h1>
       <div className="space-y-4">
         <EditableField
@@ -74,18 +74,18 @@ export default function UserDetails({
               className="mt-2 w-24 h-24 rounded-full"
             />
           ) : (
-            <p className="mt-2 p-2 bg-gray-100 rounded">No Image</p>
+            <p className="mt-2 p-2 bg-slate-700 rounded">No Image</p>
           )}
         </div>
         <div>
           <h2 className="text-xl font-semibold">Created At:</h2>
-          <p className="mt-2 p-2 bg-gray-100 rounded">
+          <p className="mt-2 p-2 bg-slate-700 rounded">
             {user.createdAt.toISOString()}
           </p>
         </div>
         <div>
           <h2 className="text-xl font-semibold">Updated At:</h2>
-          <p className="mt-2 p-2 bg-gray-100 rounded">
+          <p className="mt-2 p-2 bg-slate-700 rounded">
             {user.updatedAt.toISOString()}
           </p>
         </div>
@@ -122,7 +122,7 @@ function EditableField({
     <div className="flex items-center justify-between">
       <div>
         <h2 className="text-xl font-semibold">{label}:</h2>
-        <p className="mt-2 p-2 bg-gray-100 rounded">{value}</p>
+        <p className="mt-2 p-2 bg-slate-700 rounded">{value}</p>
       </div>
       {isEditable && (
         <Dialog>

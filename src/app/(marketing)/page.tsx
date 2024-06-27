@@ -3,6 +3,9 @@ import { auth, signIn, signOut } from "@/auth";
 import Image from "next/image";
 import FirstSection from "@/components/shared/Marketing/FirstSection/FirstSection";
 import Carousel from "@/components/shared/Marketing/Carousel/Carousel";
+import SecondSection from "@/components/shared/Marketing/SecondSection/SecondSection";
+import ThirdSection from "@/components/shared/Marketing/ThirdSection/ThirdSection";
+import Footer from "@/components/shared/Marketing/Footer/Footer";
 
 export default async function Home() {
   const session = await auth();
@@ -11,6 +14,9 @@ export default async function Home() {
     <main>
       <FirstSection />
       <Carousel />
+      <SecondSection />
+      <ThirdSection />
+      <Footer />
     </main>
     // <main className="flex flex-col items-center justify-center h-screen">
     //   <div className="mt-4">

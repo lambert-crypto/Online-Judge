@@ -17,7 +17,7 @@ export default async function UserProfile({
 
   if (!user) {
     return (
-      <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+      <div className="max-w-2xl mx-auto p-6 bg-slate-900 text-white rounded-lg shadow-md mt-10">
         <h1 className="text-center text-2xl font-bold mb-6">User Not Found</h1>
         <div className="text-center">
           <Link
@@ -31,5 +31,9 @@ export default async function UserProfile({
     );
   }
 
-  return <UserDetails user={user} authenticatedUser={authenticatedUser} />;
+  return (
+    <div className="bg-slate-700 text-white">
+      <UserDetails user={user} authenticatedUser={authenticatedUser} />
+    </div>
+  );
 }

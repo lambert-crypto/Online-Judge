@@ -39,7 +39,7 @@ export default function FirstSection() {
         </div>
         <div className="pt-10 flex justify-center">
           <video className="rounded-xl" width="1000" autoPlay muted loop>
-            <source src="/content/coding-video.mp4" />
+            <source src="/content/landing-page-video.mp4" />
           </video>
         </div>
       </div>

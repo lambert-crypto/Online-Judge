@@ -44,7 +44,7 @@ export default function Carousel() {
   text-transparent
   "
       >
-        Learn to code in multiple languages
+        Supported Programming Languages
       </div>
       <div className="grid grid-cols-4 p-4 md:flex justify-center md:gap-x-20">
         <AnimatePresence custom={currentImageIndex}>
@@ -58,6 +58,10 @@ export default function Carousel() {
                 transition: { duration: 0.5 },
               }}
               custom={index}
+              exit={{ opacity: 0 }}
+              transition={{
+                opacity: { duration: 0.5 },
+              }}
             >
               <Image
                 src={image.url}
